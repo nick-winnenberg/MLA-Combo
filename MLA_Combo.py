@@ -1,19 +1,8 @@
 import streamlit as st
 import pandas as pd
-import numpy as np
-import matplotlib.pylab as plt
-import seaborn as sns
-from scipy import stats
 from fuzzywuzzy import process
-import os
-import glob
 from pathlib import Path
-from datetime import date, timedelta
-import string
-import time
 
-plt.style.use('ggplot')
-pd.options.display.max_rows = 200
 
 ## Similar Names
 def combine_similar_names(df, column_name):
@@ -30,6 +19,7 @@ def combine_similar_names(df, column_name):
     return df
 
 "Welcome to the MLA Combo Quick Tool. If you're with the company, you know what to do! If you have issues with this, send Nick Winnenberg an email."
+"Reminder to GET OWNER PERMISSION before merging their files. This is and should continue to be an opt-in excersize."
 
 files_dict = {}
 
