@@ -20,8 +20,7 @@ def combine_similar_names(df, column_name):
     df[column_name] = df[column_name].apply(lambda x: combined_names[x])
     return df
 
-"Welcome to the MLA Combo Quick Tool. If you're with the company, you know what to do! If you have issues with this, send Nick Winnenberg an email."
-"Reminder to GET OWNER PERMISSION before merging their files. This is and should continue to be an opt-in excersize."
+"Welcome to the MLA Combo Quick Tool. If you're with the company, and didn't just stumble across this, you know what to do! If you need help, ask your ZVP"
 
 files_dict = {}
 
@@ -67,26 +66,25 @@ dfs = []
 for key, value in scrubbed.items():
     dfs.append(value)
 
-
-df = dfs[0]
+if len(dfs)>0:
+    df = dfs[0]
 
 
 for i in dfs[1:]:
     df = pd.merge(df,i,on="Company Name", how="outer")
 
-df = df.reset_index()
+if len(dfs)>0:
+    df = df.reset_index()
 
-print("Processing Combined Names")
-st.write("Combining similar names. No big deal. It takes a minute, so go grab a cup of coffee... Seriously, it takes forever. Feel free to open a different tab and browse Creeds Greatest Hits. If your computer catches fire or anything, SOAK Zone is not liable.")
-df_combined = combine_similar_names(df, 'Company Name')
+    print("Processing Combined Names")
+    st.write("Combining similar names. No big deal. It takes a minute, so go grab a cup of coffee... Seriously, it takes forever. Feel free to open a different tab and browse Creeds Greatest Hits.")
+    df_combined = combine_similar_names(df, 'Company Name')
 
-print("Processing Finished")
-df_combined=df_combined.groupby('Company Name').sum()
+    print("Processing Finished")
+    df_combined=df_combined.groupby('Company Name').sum()
 
-df_combined["Offices Contacted"] = df_combined.apply(lambda row: (row > 0).sum(), axis=1)
+    df_combined["Offices Contacted"] = df_combined.apply(lambda row: (row > 0).sum(), axis=1)
 
-df_combined = df_combined.sort_values(by=["Offices Contacted"], ascending=False)
+    df_combined = df_combined.sort_values(by=["Offices Contacted"], ascending=False)
 
-df_combined
-
-"Press the download button over the above card and it should pull in everyone. GLHF! If it works, it was Nick Winnenberg. If it's broken, it's Chris's fault."
+    df_combined
