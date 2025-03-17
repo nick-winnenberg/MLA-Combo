@@ -67,7 +67,9 @@ dfs = []
 for key, value in scrubbed.items():
     dfs.append(value)
 
+
 df = dfs[0]
+
 
 for i in dfs[1:]:
     df = pd.merge(df,i,on="Company Name", how="outer")
